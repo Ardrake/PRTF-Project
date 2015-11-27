@@ -9,7 +9,7 @@ namespace SGI
     /// <summary>
     ///  Classe Conservateur - hérite de Personne
     /// </summary>
-    class Conservateur : Personne
+    public class Conservateur : Personne
     {
 
         private double commission;

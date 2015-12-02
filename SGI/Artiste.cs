@@ -10,13 +10,21 @@ namespace SGI
     public class Artiste : Personne
     {
 
-        public Artiste()
+        private string idConservateur;
+
+        public string IDConservateur
+        {
+            get { return idConservateur; }
+            set { idConservateur = value; }
+        }
+
+                public Artiste()
         {
         }
 
-        public Artiste(string iDArtiste, string PrenomArtiste, string NomArtiste) : base(iDArtiste, PrenomArtiste, NomArtiste)
+        public Artiste(string iDArtiste, string PrenomArtiste, string NomArtiste, string idDuConservateur) : base(iDArtiste, PrenomArtiste, NomArtiste)
         {
-            
+            idConservateur = idDuConservateur;
         }
 
         public override string ToString()

@@ -45,6 +45,8 @@
     <Compile Include="Conservateur.cs" />
     <Compile Include="Conservateurs.cs" />
     <Compile Include="Galerie.cs" />
+    <Compile Include="Oeuvre.cs" />
+    <Compile Include="Oeuvres.cs" />
     <Compile Include="Personne.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

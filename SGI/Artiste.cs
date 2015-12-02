@@ -9,8 +9,8 @@ namespace SGI
 {
     public class Artiste : Personne
     {
-
         private string idConservateur;
+
 
         public string IDConservateur
         {
@@ -18,14 +18,17 @@ namespace SGI
             set { idConservateur = value; }
         }
 
-                public Artiste()
+
+        public Artiste()
         {
         }
+
 
         public Artiste(string iDArtiste, string PrenomArtiste, string NomArtiste, string idDuConservateur) : base(iDArtiste, PrenomArtiste, NomArtiste)
         {
             idConservateur = idDuConservateur;
         }
+
 
         public override string ToString()
         {
@@ -33,8 +36,6 @@ namespace SGI
 
             return infoConservateur;
         }
-
-
     }
 }
 

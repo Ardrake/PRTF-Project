@@ -54,6 +54,7 @@ namespace GalerieArtSGI
                 }
                 else if (valeurChoix == 7) // Options 7 - Vendre œuvre
                 {
+                    VendreUneOeuvre();
                     //gal.VendreOeuvre();
                 }
 
@@ -361,6 +362,62 @@ namespace GalerieArtSGI
 
 
         }
+
+        /// <summary>
+        /// Fonction pour vendre une oeuvre
+        /// </summary>
+        public static void VendreUneOeuvre()
+        {
+            Console.Clear();
+            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.BackgroundColor = ConsoleColor.White;
+            Console.WriteLine("Vendre oeuvre");
+            Console.ResetColor();
+            Console.WriteLine("- - - - - - - - - - - -");
+            Console.WriteLine("Entrez le code de l'ouevre a vendre");
+
+            bool codeValid = false;
+            decimal PrixOeuvre = 0;
+            string oeuvreCode = "";
+
+            do
+            {
+                oeuvreCode = Console.ReadLine().ToUpper();
+
+                if (oeuvreCode.Length == 5)
+                {
+                    codeValid = true;
+                }
+                else
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("Code invalid - doit avoir 5 characteres ");
+                    Console.WriteLine("Entrez le code de l'oeuvre");
+                    Console.ResetColor();
+                }
+            } while (codeValid == false);
+
+            Console.WriteLine("Entrez le prix de vente :");
+            string saisiePrixOeuvre = Console.ReadLine();
+
+            try
+            {
+                PrixOeuvre = decimal.Parse(saisiePrixOeuvre);
+            }
+            catch (FormatException e)
+            {
+                Console.WriteLine(e.Message);
+                Console.ReadKey();
+            }
+
+            Console.WriteLine("Cette oeuvre a été vendu pour le prix de " + saisiePrixOeuvre);
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine("Appuyer sur une touche pour continuer...");
+            Console.ResetColor();
+            Console.ReadKey();
+        }
+
+
 
         /// </summary>
         /// <param name="code">sting a evaluer la longueur</param>

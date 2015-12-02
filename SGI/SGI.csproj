@@ -40,6 +40,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Artiste.cs" />
+    <Compile Include="Artistes.cs" />
     <Compile Include="Conservateur.cs" />
     <Compile Include="Conservateurs.cs" />
     <Compile Include="Galerie.cs" />

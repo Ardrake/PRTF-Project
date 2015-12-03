@@ -7,13 +7,13 @@ using SGI;
 
 namespace GalerieArtSGI
 {
-    
     class Program
     {
+        public static string modeTest = "O";
+        static Galerie gal = new Galerie();
+
         static void Main(string[] args)
         {
-            string modeTest = "O";
-            Galerie gal = new Galerie();
 
             int valeurChoix = 0;
 
@@ -28,12 +28,12 @@ namespace GalerieArtSGI
                 if (valeurChoix == 1)  // Option 1 - Ajouter conservateur
                 {
                     string[] infoConservateur = NouveauConservateur();
-                    gal.AjouterConservateurs(infoConservateur[0], infoConservateur[1], infoConservateur[2]);
+                    gal.AjouterConservateurs(infoConservateur[0], infoConservateur[1], infoConservateur[2], modeTest);
                                     }
                 else if (valeurChoix == 2) // Option 2 - Ajouter artiste
                 {
                     NouvelArtiste();
-                    gal.AjouterArtiste();
+                    //gal.AjouterArtiste();
                 }
                 else if (valeurChoix == 3) // Option 3 -Ajouter oeuvre
                 {
@@ -46,7 +46,6 @@ namespace GalerieArtSGI
                 }
                 else if (valeurChoix == 5) // Option 5 - Afficher artiste
                 {
-                    AfficherLesArtistes();
                     gal.AfficherArtiste();
                     
                 }
@@ -59,12 +58,35 @@ namespace GalerieArtSGI
                     VendreUneOeuvre();
                     //gal.VendreOeuvre();
                 }
-
-
+                else if (valeurChoix == 9) // Options 9 - Load test data
+                {
+                    LoadDataTest();
+                }
             }
         }
 
-        // Termine le menu
+        private static void LoadDataTest()
+        {
+            for (int x = 0; x < DataTest.listConservateur.GetLength(0); x++)
+            {
+                string LeCode = DataTest.listConservateur[x, 0];
+                string lePrenom = DataTest.listConservateur[x, 1];
+                string leNom = DataTest.listConservateur[x, 2];
+                gal.AjouterConservateurs(LeCode, lePrenom, leNom, modeTest);
+            }
+            for (int x = 0; x < DataTest.listArtiste.GetLength(0); x++)
+            {
+                string LeCode = DataTest.listArtiste[x, 0];
+                string lePrenom = DataTest.listArtiste[x, 1];
+                string leNom = DataTest.listArtiste[x, 2];
+                string leConservateur = DataTest.listArtiste[x, 2];
+                gal.AjouterArtiste(LeCode, lePrenom, leNom, leConservateur, modeTest);
+            }
+
+
+            Console.WriteLine("Le data test a été chargé");
+            modeTest = "N";
+        }
 
 
         /// <summary>
@@ -87,9 +109,10 @@ namespace GalerieArtSGI
             Console.WriteLine("6 - Afficher oeuvre");
             Console.WriteLine("7 - Vendre oeuvre");
             Console.WriteLine("8 - Quitter");
-            if 
-            Console.WriteLine("9 - Load Data Test");
-
+            if (modeTest == "O")
+            {
+                Console.WriteLine("9 - Load Data Test");
+            }
             Console.WriteLine("- - - - - - - - - - - - - - - - - ");
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("SVP entrez votre selection (nombre) et appuyer sur enter");
@@ -365,7 +388,6 @@ namespace GalerieArtSGI
             // retour enregistrement sauvegarder
             // Code pour sauvegarder le conservateur va ici
 
-
         }
 
         /// <summary>
@@ -493,6 +515,7 @@ namespace GalerieArtSGI
 
             return new string[] { conservateurCode, prenonconservateur, conservateurNom };
         }
+
 
         /// </summary>
         /// <param name="code">sting a evaluer la longueur</param>

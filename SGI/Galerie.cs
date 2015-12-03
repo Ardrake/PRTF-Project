@@ -15,15 +15,21 @@ namespace SGI
         public Conservateurs TableauConservateurs = new Conservateurs();
         public Artistes TableauArtistes = new Artistes();
 
-        public void AjouterConservateurs()
+        public void AjouterConservateurs(string idconservateur, string prenomconservateur, string nomconservateur)
         {
-            Console.WriteLine("Methode AjouterConservateur");
+            Conservateur nouvconsevateur = new Conservateur(idconservateur, prenomconservateur, nomconservateur);
+            TableauConservateurs.Add(nouvconsevateur);
+            Console.WriteLine("Le Conservateur ID: {0}, Prenom: {1}, Nom: {2} a été ajouté au système", nouvconsevateur.ID, nouvconsevateur.Prenom, nouvconsevateur.Nom);
             Console.ReadKey();
         }
 
         public void AfficherConservateur()
         {
-            Console.WriteLine("Methode AfficherConservateur");
+            Console.WriteLine("Liste des Conservateur");
+            foreach (Conservateur c in this.TableauConservateurs)
+            {
+                Console.WriteLine(c.ToString());
+            }
             Console.ReadKey();
         }
 

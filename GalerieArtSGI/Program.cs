@@ -12,6 +12,7 @@ namespace GalerieArtSGI
     {
         static void Main(string[] args)
         {
+            string modeTest = "O";
             Galerie gal = new Galerie();
 
             int valeurChoix = 0;
@@ -26,8 +27,9 @@ namespace GalerieArtSGI
                 //Prendre action / loadé le module correspondant
                 if (valeurChoix == 1)  // Option 1 - Ajouter conservateur
                 {
-                    gal.AjouterConservateurs();
-                }
+                    string[] infoConservateur = NouveauConservateur();
+                    gal.AjouterConservateurs(infoConservateur[0], infoConservateur[1], infoConservateur[2]);
+                                    }
                 else if (valeurChoix == 2) // Option 2 - Ajouter artiste
                 {
                     NouvelArtiste();
@@ -85,6 +87,9 @@ namespace GalerieArtSGI
             Console.WriteLine("6 - Afficher oeuvre");
             Console.WriteLine("7 - Vendre oeuvre");
             Console.WriteLine("8 - Quitter");
+            if 
+            Console.WriteLine("9 - Load Data Test");
+
             Console.WriteLine("- - - - - - - - - - - - - - - - - ");
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("SVP entrez votre selection (nombre) et appuyer sur enter");
@@ -417,7 +422,77 @@ namespace GalerieArtSGI
             Console.ReadKey();
         }
 
+        /// <summary>
+        /// Fonction pour ajouté un conservateur dans la base de donnée
+        /// </summary>
+        private static string[] NouveauConservateur()
+        {
+            Console.Clear();
+            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.BackgroundColor = ConsoleColor.White;
+            Console.WriteLine("Ajouter Conservateur");
+            Console.ResetColor();
+            Console.WriteLine("- - - - - - - - - - - -");
 
+            string conservateurCode = "";
+            string prenonconservateur = "";
+            string conservateurNom = "";
+            bool codeValid = false;
+            bool nomValid = false;
+            bool prenomValid = false;
+
+            do
+            {
+                Console.WriteLine("Entrez le code du consevateur");
+                conservateurCode = Console.ReadLine().ToUpper();
+
+                if (validCodeLongueur(conservateurCode, 5)) // appelle la fonction qui valide la longueur
+                {
+                        codeValid = true;
+                }
+                else
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("Code invalid - doit avoir 5 characteres ");
+                    Console.WriteLine("Entrez le code du consevateur");
+                    Console.ResetColor();
+                }
+            } while (codeValid == false);
+
+            do
+            {
+                Console.WriteLine("Entrez le prenom du consevateur");
+                prenonconservateur = Console.ReadLine();
+                if (validCodeLongueur(prenonconservateur, 30, false))
+                {
+                    prenomValid = true;
+                }
+                else
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("Prenom invalid - doit avoir 30 characteres ");
+                    Console.ResetColor();
+                }
+            } while (prenomValid == false);
+
+            do
+            {
+                Console.WriteLine("Entrez le nom du consevateur");
+                conservateurNom = Console.ReadLine();
+                if (validCodeLongueur(conservateurNom, 30, false))
+                {
+                    nomValid = true;
+                }
+                else
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("Nom invalid - doit avoir 30 characteres ");
+                    Console.ResetColor();
+                }
+            } while (nomValid == false);
+
+            return new string[] { conservateurCode, prenonconservateur, conservateurNom };
+        }
 
         /// </summary>
         /// <param name="code">sting a evaluer la longueur</param>

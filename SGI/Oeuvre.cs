@@ -26,17 +26,20 @@ namespace SGI
             set { titre = value; }
         }
 
+
         public int Annee
         {
             get { return annee; }
             set { annee = value; }
         }
 
+
         public double ValeurEstimee
         {
             get { return valeurEstimee; }
             set { valeurEstimee = value; }
         }
+
 
         public string IdArtiste
         {
@@ -49,11 +52,13 @@ namespace SGI
         {
         }
 
+
         public Oeuvre(string idOeuvre, string titre, int annee, double valeurEstimee, string idArtiste)
         {
             etat = "E";
             prix = 0;
         }
+
 
         public double CalculerComm(double PrixVente, Conservateur vendeur)
         {
@@ -66,22 +71,14 @@ namespace SGI
             }
             
             return commissionPayer;
-
         }
 
-
-
-
+                
         public override string ToString()
         {
             string infoOeuvre = "\nID: " + idOeuvre + " \nTitre :" + titre + "Année: " + annee + "\nValeur Estimée: " + valeurEstimee;
 
             return infoOeuvre;
         }
-
-
-
-
-
     }
 }

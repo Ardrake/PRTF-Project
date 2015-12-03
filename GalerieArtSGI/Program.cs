@@ -14,7 +14,6 @@ namespace GalerieArtSGI
 
         static void Main(string[] args)
         {
-
             int valeurChoix = 0;
 
             while (valeurChoix != 8)
@@ -32,8 +31,8 @@ namespace GalerieArtSGI
                                     }
                 else if (valeurChoix == 2) // Option 2 - Ajouter artiste
                 {
-                    NouvelArtiste();
-                    //gal.AjouterArtiste();
+                    string[] infoArtiste = NouvelArtiste();
+                    gal.AjouterArtiste(infoArtiste[0], infoArtiste[1], infoArtiste[2], infoArtiste[3], modeTest);
                 }
                 else if (valeurChoix == 3) // Option 3 -Ajouter oeuvre
                 {
@@ -65,6 +64,7 @@ namespace GalerieArtSGI
             }
         }
 
+
         private static void LoadDataTest()
         {
             for (int x = 0; x < DataTest.listConservateur.GetLength(0); x++)
@@ -82,7 +82,6 @@ namespace GalerieArtSGI
                 string leConservateur = DataTest.listArtiste[x, 2];
                 gal.AjouterArtiste(LeCode, lePrenom, leNom, leConservateur, modeTest);
             }
-
 
             Console.WriteLine("Le data test a été chargé");
             modeTest = "N";
@@ -138,10 +137,11 @@ namespace GalerieArtSGI
             }
         }
 
+
         /// <summary>
         /// Fonction pour ajouter Artiste dans la base de donnée
         /// </summary>
-        private static string NouvelArtiste()
+        private static string[] NouvelArtiste()
         {
             Console.Clear();
             Console.ForegroundColor = ConsoleColor.Blue;
@@ -155,9 +155,11 @@ namespace GalerieArtSGI
             string artisteCode = "";
             string artisteNom = "";
             string artistePrenom = "";
+            string conservateurID = "";
             bool codeValid = false;
             bool nomValid = false;
             bool prenomValid = false;
+            bool idValid = false;
 
             do
             {
@@ -199,12 +201,6 @@ namespace GalerieArtSGI
                 if (validCodeLongueur(artisteNom, 40, false))
                 {
                     nomValid = true;
-                    Console.WriteLine("Enregistrement Artiste - code: {0}, Prénom: {1}, Nom: {2} est sauvegarder", artisteCode, artistePrenom, artisteNom);
-                    Console.ForegroundColor = ConsoleColor.Green;
-                    Console.WriteLine("Appuyer sur une touche pour continuer...");
-                    Console.ResetColor();
-                    Console.ReadKey();
-
                 }
                 else
                 {
@@ -214,16 +210,35 @@ namespace GalerieArtSGI
                 }
             } while (nomValid == false);
 
-            // retour enregistrement sauvegarder
-            // Code pour sauvegarder le conservateur va ici ou retour vers fonction AjouterArtiste
-            return artisteCode + " " + artisteNom;
+            do
+            {
+                Console.WriteLine("Entrez le ID du conservateur");
+                conservateurID = Console.ReadLine();
+                if (validCodeLongueur(conservateurID, 5, false))
+                {
+                    // rajout ici recup nom conservateur et valid que le ID conservateur est valide
+                    idValid = true;
+                }
+                else
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("ID invalid - doit avoir 5 characteres ");
+                    Console.ResetColor();
+                }
+            } while (idValid == false);
+
+            return new string[] { artisteCode, artistePrenom, artisteNom, conservateurID };
+
+            
         }
+
 
         private static void AfficherLesArtistes()
         {
             Console.WriteLine("Artiste présent au systme");
             Console.ReadKey();
         }
+
 
         /// <summary>
         /// Ajouter un oeuvre dans la BD
@@ -387,8 +402,8 @@ namespace GalerieArtSGI
             Console.ReadKey();
             // retour enregistrement sauvegarder
             // Code pour sauvegarder le conservateur va ici
-
         }
+
 
         /// <summary>
         /// Fonction pour vendre une oeuvre
@@ -443,6 +458,7 @@ namespace GalerieArtSGI
             Console.ResetColor();
             Console.ReadKey();
         }
+
 
         /// <summary>
         /// Fonction pour ajouté un conservateur dans la base de donnée

@@ -11,9 +11,9 @@ namespace SGI
     /// </summary>
     public class Galerie
     {
-
         public Conservateurs TableauConservateurs = new Conservateurs();
         public Artistes TableauArtistes = new Artistes();
+
 
         public void AjouterConservateurs(string idconservateur, string prenomconservateur, string nomconservateur, string modetest)
         {
@@ -25,6 +25,7 @@ namespace SGI
                 Console.ReadKey();
             }
         }
+
 
         public void AfficherConservateur()
         {
@@ -40,9 +41,9 @@ namespace SGI
             Console.ReadKey();
         }
 
+
         public void AjouterArtiste(string idartiste, string idconservateur, string prenomconservateur, string nomconservateur, string modetest)
         {
-
             Artiste nouvartiste = new Artiste(idartiste, prenomconservateur, nomconservateur, idconservateur);
             TableauArtistes.Add(nouvartiste);
             Console.WriteLine("L'Artiste ID: {0}, Prenom: {1}, Nom: {2} a été ajouté au système", nouvartiste.ID, nouvartiste.Prenom, nouvartiste.Nom);
@@ -52,6 +53,7 @@ namespace SGI
             }
         }
         
+
         public void AfficherArtiste()
         {
             Console.WriteLine("Liste des Artistes");
@@ -65,8 +67,6 @@ namespace SGI
             else Console.WriteLine("Aucun Artiste dans la collection");
             Console.ReadKey();
         }
-
-
 
     }
 }

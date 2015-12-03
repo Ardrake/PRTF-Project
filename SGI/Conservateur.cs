@@ -11,9 +11,9 @@ namespace SGI
     /// </summary>
     public class Conservateur : Personne
     {
-
         private double commission;
         const double TauxDeCommission = 0.10;
+
 
         public double Commission
         { 
@@ -21,14 +21,17 @@ namespace SGI
             set { commission = value; }
         }
 
+
         public Conservateur()
         {
         }
+
 
         public Conservateur(string iDConservateur, string PrenomConservateur, string NomConservateur) : base(iDConservateur, PrenomConservateur, NomConservateur)
         {
             commission = 0;
         }
+
 
         public override string ToString()
         {
@@ -36,6 +39,7 @@ namespace SGI
 
             return infoConservateur;
         }
+
 
         public void SetComm(double PrixVente)
         {

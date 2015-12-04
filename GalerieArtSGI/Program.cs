@@ -397,7 +397,7 @@ namespace GalerieArtSGI
             } while (valeurValid == false);
 
 
-            return new object[] { (string)oeuvreCode, (string)oeuvreNom, (int)anneOeuvre, (int)valeurOeuvre, (string)oeuvreArtisteCode };
+            return new object[] { (string)oeuvreCode, (string)oeuvreNom, (int)anneOeuvre, (double)valeurOeuvre, (string)oeuvreArtisteCode };
         }
 
 
@@ -415,8 +415,9 @@ namespace GalerieArtSGI
             Console.WriteLine("Entrez le code de l'ouevre a vendre");
 
             bool codeValid = false;
-            int PrixOeuvre = 0;
+            double PrixOeuvre = 0;
             string oeuvreCode = "";
+            Oeuvre retourOeuvre = null;
 
             do
             {
@@ -424,7 +425,9 @@ namespace GalerieArtSGI
 
                 if (oeuvreCode.Length == 5)
                 {
-                    if (gal.TrouverOeuvre(oeuvreCode, false) != null)
+                    retourOeuvre = gal.TrouverOeuvre(oeuvreCode, false);
+
+                    if (retourOeuvre != null)
                     {
                         codeValid = true;
                     }
@@ -454,7 +457,7 @@ namespace GalerieArtSGI
 
                 try
                 {
-                    PrixOeuvre = int.Parse(saisiePrixOeuvre);
+                    PrixOeuvre = double.Parse(saisiePrixOeuvre);
                 }
                 catch (FormatException e)
                 {
@@ -463,14 +466,9 @@ namespace GalerieArtSGI
                 }
 
 
-                gal.VendreOeuvre(oeuvreCode, PrixOeuvre);
-                Console.WriteLine("Cette oeuvre a été vendu pour le prix de " + saisiePrixOeuvre);
-                Console.ForegroundColor = ConsoleColor.Green;
-                Console.WriteLine("Appuyer sur une touche pour continuer...");
-                Console.ResetColor();
-                Console.ReadKey();
-
             } while (codeValid == false);
+
+            gal.VendreOeuvre(retourOeuvre, PrixOeuvre);
         }
 
 

@@ -14,8 +14,8 @@ namespace SGI
         private string id = "";
         private string titre = "";
         private int annee = 1700;
-        private int prix = 0;
-        private int valeurEstimee = 0;
+        private double prix = 0;
+        private double valeurEstimee = 0;
         private string idArtiste = "";
         private string etat = "E";
 
@@ -23,46 +23,36 @@ namespace SGI
         public string ID
         {
             get { return id; }
-            set { ID = id; }
         }
 
         public string Titre
         {
             get { return titre; }
-            set { Titre = titre; }
         }
 
 
         public int Annee
         {
             get { return annee; }
-            set { Annee = annee; }
         }
 
 
-        public int ValeurEstimee
+        public double ValeurEstimee
         {
             get { return valeurEstimee; }
-            set { ValeurEstimee = valeurEstimee; }
         }
 
 
-        public string IdArtiste
-        {
-            get { return idArtiste; }
-            set { IdArtiste = idArtiste; }
-        }
-
-        public int Prix
+        public double Prix
         {
             get { return prix; }
-            set { Prix = prix; }
+            set { prix = value; }
         }
 
         public string Etat
         {
             get { return etat; }
-            set { Etat = etat; }
+            set { etat = value; }
         }
 
 
@@ -71,7 +61,7 @@ namespace SGI
         }
 
 
-        public Oeuvre(string idoeuvre, string titreoeuvre, int anneeoeuvre, int valeurEstimeeoeuvre, string idArtisteoeuvre)
+        public Oeuvre(string idoeuvre, string titreoeuvre, int anneeoeuvre, double valeurEstimeeoeuvre, string idArtisteoeuvre)
         {
             id = idoeuvre;
             titre = titreoeuvre;

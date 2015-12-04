@@ -18,7 +18,7 @@ namespace SGI
         public string ID
         {
             get { return id; }
-            set { ID = id; }
+            set { id = value; }
         }
 
         public string Prenom

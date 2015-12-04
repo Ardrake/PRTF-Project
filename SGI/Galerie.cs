@@ -69,16 +69,17 @@ namespace SGI
         }
 
 
-        public object TrouverOeuvre(string idOeuvre, bool verbose)
+        public Oeuvre TrouverOeuvre(string idOeuvre, bool verbose)
         {
             bool trouveRecord = false;
             Oeuvre retourOeuvre = null;
-            foreach (Oeuvre c in TableauOeuvres)
+            foreach (Oeuvre o in TableauOeuvres)
             {
-                if (c.ID == idOeuvre)
+                if (o.ID == idOeuvre)
                 {
                     trouveRecord = true;
-                    retourOeuvre = c;
+                    retourOeuvre = o;
+                    break;
                 }
             }
 
@@ -94,17 +95,24 @@ namespace SGI
             return retourOeuvre;
         }
 
-        public bool VendreOeuvre(string idOeuvre, int prixvente)
+        public bool VendreOeuvre(Oeuvre oOeuvre, double prixvente)
         {
             bool OeuvreVendu = false;
-            Oeuvre OeuvreAVendre = (Oeuvre)TrouverOeuvre(idOeuvre, false);
-
-            if (OeuvreAVendre != null)
+            
+            if (oOeuvre != null)
             {
-                if (OeuvreAVendre.ValeurEstimee < prixvente)
+                if (oOeuvre.ValeurEstimee < prixvente)
                 {
-                    OeuvreAVendre.Prix = prixvente;
-                    OeuvreAVendre.Etat = "V";
+                    oOeuvre.Prix = prixvente;
+                    oOeuvre.Etat = "V";
+                    OeuvreVendu = true;
+                    Console.WriteLine("Oeuvre vendu");
+                    Console.ReadKey();
+                }
+                else
+                {
+                    Console.WriteLine("Le prix de vente est inferieur a la valeur estimée cette transaction est refusé");
+                    Console.ReadKey();
                 }
             }
 
@@ -138,7 +146,7 @@ namespace SGI
         }
 
 
-        public void AjouterOeuvre(string idoeuvre, string titreoeuvre,  int anneeoeuvre, int valeuroeuvre, string idartiste, string modetest)
+        public void AjouterOeuvre(string idoeuvre, string titreoeuvre,  int anneeoeuvre, double valeuroeuvre, string idartiste, string modetest)
         {
             //string idOeuvre, string titre, int annee, double valeurEstimee, string idArtiste
             Oeuvre nouvelleOeuvre = new Oeuvre(idoeuvre, titreoeuvre, anneeoeuvre, valeuroeuvre, idartiste);

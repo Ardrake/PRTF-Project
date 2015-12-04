@@ -69,6 +69,48 @@ namespace SGI
         }
 
 
+        public object TrouverOeuvre(string idOeuvre, bool verbose)
+        {
+            bool trouveRecord = false;
+            Oeuvre retourOeuvre = null;
+            foreach (Oeuvre c in TableauOeuvres)
+            {
+                if (c.ID == idOeuvre)
+                {
+                    trouveRecord = true;
+                    retourOeuvre = c;
+                }
+            }
+
+            if (trouveRecord && verbose)
+            {
+                Console.WriteLine(retourOeuvre.Titre);
+            }
+            if (!trouveRecord && verbose)
+            {
+                Console.WriteLine("Oeuvre ID: {0}, pas trouvé", idOeuvre);
+            }
+
+            return retourOeuvre;
+        }
+
+        public bool VendreOeuvre(string idOeuvre, int prixvente)
+        {
+            bool OeuvreVendu = false;
+            Oeuvre OeuvreAVendre = (Oeuvre)TrouverOeuvre(idOeuvre, false);
+
+            if (OeuvreAVendre != null)
+            {
+                if (OeuvreAVendre.ValeurEstimee < prixvente)
+                {
+                    OeuvreAVendre.Prix = prixvente;
+                    OeuvreAVendre.Etat = "V";
+                }
+            }
+
+            return OeuvreVendu;
+        }
+
         public void AjouterArtiste(string idartiste, string prenomartiste, string nomartiste, string idconservateur, string modetest)
         {
             Artiste nouvartiste = new Artiste(idartiste, prenomartiste, nomartiste, idconservateur);

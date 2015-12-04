@@ -44,8 +44,8 @@ namespace GalerieArtSGI
                 }
                 else if (valeurChoix == 3) // Option 3 -Ajouter oeuvre
                 {
-                    NouvelleOeuvre();
-                    //gal.AjouterOeuvre();
+                    object[] infoOeuvre = NouvelleOeuvre();
+                    gal.AjouterOeuvre((string)infoOeuvre[0], (string)infoOeuvre[1], (int)infoOeuvre[2], (int)infoOeuvre[3], (string)infoOeuvre[4], modeTest);
                 }
                 else if (valeurChoix == 4) // Option 4 - Afficher conservateur
                 {
@@ -243,7 +243,6 @@ namespace GalerieArtSGI
                         idValid = true;
                     }
 
-
                     if (!idValid)
                     {
                         Console.WriteLine("Conservateur non trouvé voulez vous re-essayer? oui ou non = O/N");
@@ -253,7 +252,6 @@ namespace GalerieArtSGI
                             break;
                         }
                     }
-
 
                 }
                 else
@@ -278,7 +276,7 @@ namespace GalerieArtSGI
         /// <summary>
         /// Ajouter un oeuvre dans la BD
         /// </summary>
-        private static void NouvelleOeuvre()
+        private static object[] NouvelleOeuvre()
         {
             Console.Clear();
             Console.ForegroundColor = ConsoleColor.Blue;
@@ -292,15 +290,14 @@ namespace GalerieArtSGI
             bool nomValid = false;
             bool artisteValid = false;
             bool anneeValid = false;
-            bool etatValid = false;
             bool valeurValid = false;
             string oeuvreArtisteCode = "";
             string oeuvreCode = "";
             string oeuvreNom = "";
-            string etatOeuvre = "";
             string nonExiste = "";
-            string anneOeuvre = "";
-            decimal valeurOeuvre = 0;
+            string anneOeuvrestr = "";
+            int anneOeuvre = 1700;
+            int valeurOeuvre = 0;
 
             do
             {
@@ -359,13 +356,13 @@ namespace GalerieArtSGI
             do
             {
                 Console.WriteLine("Entrez l'année de realisation de l'oeuvre (AAAA)");
-                anneOeuvre = Console.ReadLine();
+                anneOeuvrestr = Console.ReadLine();
 
-                if (anneOeuvre.Length == 4)
+                if (anneOeuvrestr.Length == 4)
                 {
                     try
                     {
-                        int a = Int32.Parse(anneOeuvre);
+                        anneOeuvre = Int32.Parse(anneOeuvrestr);
                         anneeValid = true;
                     }
                     catch (FormatException e)
@@ -383,60 +380,24 @@ namespace GalerieArtSGI
 
             do
             {
-                Console.WriteLine("Entrez la valeur extimée de l'oeuvre");
+                Console.WriteLine("Entrez la valeur estimée de l'oeuvre");
                 string saisieOeuvre = Console.ReadLine();
 
-                if (anneOeuvre.Length == 4)
+                try
                 {
-                    try
-                    {
-                        valeurOeuvre = decimal.Parse(saisieOeuvre);
-                        valeurValid = true;
-                    }
-                    catch (FormatException e)
-                    {
-                        Console.WriteLine(e.Message);
-                        Console.ReadKey();
-                    }
+                    valeurOeuvre = int.Parse(saisieOeuvre);
+                    valeurValid = true;
                 }
-                else
+                catch (FormatException e)
                 {
-                    Console.WriteLine("Le format doit etre monetaire (0000.00");
+                    Console.WriteLine(e.Message);
+                    Console.ReadKey();
                 }
 
             } while (valeurValid == false);
 
-            do
-            {
-                Console.WriteLine("Entrez le statut / Etat de l'oeuvre (E/V/N)");
-                Console.WriteLine("E - Exposer | V - Vendu | Entreposer");
-                etatOeuvre = Console.ReadLine();
 
-                if (etatOeuvre.Length == 1)
-                {
-                    if (etatOeuvre == "E" || etatOeuvre == "V" || etatOeuvre == "N")
-                    {
-                        etatValid = true;
-                    }
-
-                }
-                else
-                {
-                    Console.WriteLine("Le status doit etre (E/V/N)");
-                }
-
-            } while (etatValid == false);
-
-
-            Console.WriteLine("L'artiste {0} a été assigné comme l'auteur de cette oeuvre", nonExiste);
-            Console.WriteLine("L'ouvre a été créer en {0} et a une valeur estimé de : {1}", anneOeuvre, valeurOeuvre);
-            Console.WriteLine("Enregistrement de l'oeuvre - code: {0} - {1} à été effectuer", oeuvreCode, oeuvreNom);
-            Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine("Appuyer sur une touche pour continuer...");
-            Console.ResetColor();
-            Console.ReadKey();
-            // retour enregistrement sauvegarder
-            // Code pour sauvegarder le conservateur va ici
+            return new object[] { (string)oeuvreCode, (string)oeuvreNom, (int)anneOeuvre, (int)valeurOeuvre, (string)oeuvreArtisteCode };
         }
 
 
@@ -454,7 +415,7 @@ namespace GalerieArtSGI
             Console.WriteLine("Entrez le code de l'ouevre a vendre");
 
             bool codeValid = false;
-            decimal PrixOeuvre = 0;
+            int PrixOeuvre = 0;
             string oeuvreCode = "";
 
             do
@@ -463,7 +424,21 @@ namespace GalerieArtSGI
 
                 if (oeuvreCode.Length == 5)
                 {
-                    codeValid = true;
+                    if (gal.TrouverOeuvre(oeuvreCode, false) != null)
+                    {
+                        codeValid = true;
+                    }
+
+                    if (!codeValid)
+                    {
+                        Console.WriteLine("L'oeuvre avec ce code n'existe pas, voulez vous re-essayer? Oui ou Non (O/N)");
+                        string sortiroeuvre = Console.ReadLine();
+                        if (sortiroeuvre != "O")
+                        {
+                            break;
+                        }
+                    }
+                    
                 }
                 else
                 {
@@ -472,26 +447,30 @@ namespace GalerieArtSGI
                     Console.WriteLine("Entrez le code de l'oeuvre");
                     Console.ResetColor();
                 }
-            } while (codeValid == false);
+            
 
-            Console.WriteLine("Entrez le prix de vente :");
-            string saisiePrixOeuvre = Console.ReadLine();
+                Console.WriteLine("Entrez le prix de vente :");
+                string saisiePrixOeuvre = Console.ReadLine();
 
-            try
-            {
-                PrixOeuvre = decimal.Parse(saisiePrixOeuvre);
-            }
-            catch (FormatException e)
-            {
-                Console.WriteLine(e.Message);
+                try
+                {
+                    PrixOeuvre = int.Parse(saisiePrixOeuvre);
+                }
+                catch (FormatException e)
+                {
+                    Console.WriteLine(e.Message);
+                    Console.ReadKey();
+                }
+
+
+                gal.VendreOeuvre(oeuvreCode, PrixOeuvre);
+                Console.WriteLine("Cette oeuvre a été vendu pour le prix de " + saisiePrixOeuvre);
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine("Appuyer sur une touche pour continuer...");
+                Console.ResetColor();
                 Console.ReadKey();
-            }
 
-            Console.WriteLine("Cette oeuvre a été vendu pour le prix de " + saisiePrixOeuvre);
-            Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine("Appuyer sur une touche pour continuer...");
-            Console.ResetColor();
-            Console.ReadKey();
+            } while (codeValid == false);
         }
 
 

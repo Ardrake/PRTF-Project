@@ -20,6 +20,12 @@ namespace SGI
         private string etat = "E";
 
 
+        public string ID
+        {
+            get { return id; }
+            set { ID = id; }
+        }
+
         public string Titre
         {
             get { return titre; }
@@ -45,6 +51,18 @@ namespace SGI
         {
             get { return idArtiste; }
             set { IdArtiste = idArtiste; }
+        }
+
+        public int Prix
+        {
+            get { return prix; }
+            set { Prix = prix; }
+        }
+
+        public string Etat
+        {
+            get { return etat; }
+            set { Etat = etat; }
         }
 
 
@@ -81,7 +99,26 @@ namespace SGI
                 
         public override string ToString()
         {
-            string infoOeuvre = "\nID: " + id + "\n Titre :" + titre + "\n Année: " + annee + "\n Valeur Estimée: " + valeurEstimee;
+            string infoOeuvre = "";
+            string status = "Exposée";
+            if (etat == "V")
+            {
+                status = "Vendu";
+            }
+            else if (etat == "N")
+            {
+                status = "Entreposée";
+            }
+
+            if (etat == "V")
+            {
+                infoOeuvre = "\nID: " + id + "\n Titre :" + titre + "\n Année: " + annee + " - Statut: " + status + "\n Prix de vente: " + prix;
+            }
+            else
+            {
+                infoOeuvre = "\nID: " + id + "\n Titre :" + titre + "\n Année: " + annee + " - Statut: " + status + "\n Valeur Estimée: " + valeurEstimee;
+            }
+            
 
             return infoOeuvre;
         }

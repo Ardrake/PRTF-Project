@@ -43,56 +43,48 @@ namespace SGI
         }
 
 
-        public bool TrouverConservateur(string idConservateur, bool verbose)
+        public Conservateur TrouverConservateur(string id)
         {
-            bool trouveRecord = false;
-            string retourConservateur = "";
+            Conservateur retour = null;
             foreach (Conservateur c in TableauConservateurs)
             {
-                if (c.ID == idConservateur)
+                if (c.ID == id)
                 {
-                    trouveRecord = true;
-                    retourConservateur = c.Prenom + " " + c.Nom;
+                    retour = c;
+                    break;
                 }
             }
-
-            if (trouveRecord && verbose)
-            {
-                Console.WriteLine(retourConservateur);
-            }
-            if (!trouveRecord && verbose)
-            {
-                Console.WriteLine("Conservateur ID: {0}, pas trouvé", idConservateur);
-            }
-
-            return trouveRecord;
+            return retour;
         }
 
 
-        public Oeuvre TrouverOeuvre(string idOeuvre, bool verbose)
+        public Artiste TrouverArtiste(string id)
         {
-            bool trouveRecord = false;
-            Oeuvre retourOeuvre = null;
+            Artiste retour = null;
+            foreach (Artiste c in TableauArtistes)
+            {
+                if (c.ID == id)
+                {
+                    retour = c;
+                    break;
+                }
+            }
+            return retour;
+        }
+
+
+        public Oeuvre TrouverOeuvre(string idOeuvre)
+        {
+            Oeuvre retour = null;
             foreach (Oeuvre o in TableauOeuvres)
             {
                 if (o.ID == idOeuvre)
                 {
-                    trouveRecord = true;
-                    retourOeuvre = o;
+                    retour = o;
                     break;
                 }
             }
-
-            if (trouveRecord && verbose)
-            {
-                Console.WriteLine(retourOeuvre.Titre);
-            }
-            if (!trouveRecord && verbose)
-            {
-                Console.WriteLine("Oeuvre ID: {0}, pas trouvé", idOeuvre);
-            }
-
-            return retourOeuvre;
+            return retour;
         }
 
         public bool VendreOeuvre(Oeuvre oOeuvre, double prixvente)

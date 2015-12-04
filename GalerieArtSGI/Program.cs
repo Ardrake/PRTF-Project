@@ -27,7 +27,16 @@ namespace GalerieArtSGI
                 if (valeurChoix == 1)  // Option 1 - Ajouter conservateur
                 {
                     string[] infoConservateur = NouveauConservateur();
-                    gal.AjouterConservateurs(infoConservateur[0], infoConservateur[1], infoConservateur[2], modeTest);
+                    if (infoConservateur.Count() > 0)
+                    {
+                        gal.AjouterConservateurs(infoConservateur[0], infoConservateur[1], infoConservateur[2], modeTest);
+                    }
+                    else
+                    {
+                        Console.WriteLine("Conservateur non sauvegarder");
+                        Console.ReadKey();
+                    }
+
                 }
                 else if (valeurChoix == 2) // Option 2 - Ajouter artiste
                 {
@@ -170,7 +179,7 @@ namespace GalerieArtSGI
             Console.WriteLine("Ajouter Artiste");
             Console.ResetColor();
             Console.WriteLine("- - - - - - - - - - - -");
-            Console.WriteLine("Entrez le code de l'artiste");
+            
             // validation des codes/nom a faire 
 
             string artisteCode = "";
@@ -184,84 +193,97 @@ namespace GalerieArtSGI
 
             do
             {
+                Console.WriteLine("Entrez le code de l'artiste");
                 artisteCode = Console.ReadLine().ToUpper();
 
                 if (validCodeLongueur(artisteCode, 5))
                 {
-                    codeValid = true;
+                    Artiste retourArtiste = gal.TrouverArtiste(artisteCode);
+
+                    if (retourArtiste == null)
+                    {
+                        codeValid = true;
+                    }
+                    else
+                    {
+                        Console.WriteLine("L'Artiste avec ce code {0} existe déja, voulez vous re-essayer? Oui ou Non (O/N)", retourArtiste.Nom + " " + retourArtiste.Prenom);
+                        string sortiroeuvre = Console.ReadLine();
+                        if (sortiroeuvre != "O")
+                        {
+                            break;
+                        }
+                    }
                 }
                 else
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine("Code invalid - doit avoir 5 characteres ");
-                    Console.WriteLine("Entrez le code de l'artiste");
+                    Console.WriteLine("Entrez le ID de l'artiste");
                     Console.ResetColor();
                 }
-            } while (codeValid == false);
-
-            do
-            {
-                Console.WriteLine("Entrez le Prénom de l'artiste");
-                artistePrenom = Console.ReadLine();
-                if (validCodeLongueur(artistePrenom, 40, false))
-                {
-                    prenomValid = true;
-                }
-                else
-                {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("Prénom invalid - doit avoir 40 characteres ");
-                    Console.ResetColor();
-                }
-            } while (prenomValid == false);
-
-            do
-            {
-                Console.WriteLine("Entrez le Nom de l'artiste");
-                artisteNom = Console.ReadLine();
-                if (validCodeLongueur(artisteNom, 40, false))
-                {
-                    nomValid = true;
-                }
-                else
-                {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("Nom invalid - doit avoir 40 characteres ");
-                    Console.ResetColor();
-                }
-            } while (nomValid == false);
-
-            do
-            {
-                Console.WriteLine("Entrez le ID du conservateur");
-                conservateurID = Console.ReadLine();
-                if (validCodeLongueur(conservateurID, 5, false))
-                {
-                    // rajout ici recup nom conservateur et valid que le ID conservateur est valide
-                    if (gal.TrouverConservateur(conservateurID, false))
+            
+                    do
                     {
-                        idValid = true;
-                    }
-
-                    if (!idValid)
-                    {
-                        Console.WriteLine("Conservateur non trouvé voulez vous re-essayer? oui ou non = O/N");
-                        string sortirconservateur = Console.ReadLine();
-                        if (sortirconservateur != "O")
+                        Console.WriteLine("Entrez le Prénom de l'artiste");
+                        artistePrenom = Console.ReadLine();
+                        if (validCodeLongueur(artistePrenom, 40, false))
                         {
-                            break;
+                            prenomValid = true;
                         }
-                    }
+                        else
+                        {
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.WriteLine("Prénom invalid - doit avoir 40 characteres ");
+                            Console.ResetColor();
+                        }
+                    } while (prenomValid == false);
 
-                }
-                else
-                {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("ID invalid - doit avoir 5 characteres ");
-                    Console.ResetColor();
-                }
-            } while (idValid == false);
+                    do
+                    {
+                        Console.WriteLine("Entrez le Nom de l'artiste");
+                        artisteNom = Console.ReadLine();
+                        if (validCodeLongueur(artisteNom, 40, false))
+                        {
+                            nomValid = true;
+                        }
+                        else
+                        {
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.WriteLine("Nom invalid - doit avoir 40 characteres ");
+                            Console.ResetColor();
+                        }
+                    } while (nomValid == false);
 
+                    do
+                    {
+                        Console.WriteLine("Entrez le ID du conservateur");
+                        conservateurID = Console.ReadLine();
+                        if (validCodeLongueur(conservateurID, 5, false))
+                        {
+                            // rajout ici recup nom conservateur et valid que le ID conservateur est valide
+                            if (gal.TrouverConservateur(conservateurID) != null)
+                            {
+                                idValid = true;
+                            }
+
+                            if (!idValid)
+                            {
+                                Console.WriteLine("Conservateur non trouvé voulez vous re-essayer? oui ou non = O/N");
+                                string sortirconservateur = Console.ReadLine();
+                                if (sortirconservateur != "O")
+                                {
+                                    break;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.WriteLine("ID invalid - doit avoir 5 characteres ");
+                            Console.ResetColor();
+                        }
+                    } while (idValid == false);
+            } while (codeValid == false);
             if (!idValid)
             {
                 return new string[] { }; ;
@@ -425,7 +447,7 @@ namespace GalerieArtSGI
 
                 if (oeuvreCode.Length == 5)
                 {
-                    retourOeuvre = gal.TrouverOeuvre(oeuvreCode, false);
+                    retourOeuvre = gal.TrouverOeuvre(oeuvreCode);
 
                     if (retourOeuvre != null)
                     {
@@ -498,7 +520,21 @@ namespace GalerieArtSGI
 
                 if (validCodeLongueur(conservateurCode, 5)) // appelle la fonction qui valide la longueur
                 {
+                    Conservateur retourConservateur = gal.TrouverConservateur(conservateurCode);
+
+                    if (retourConservateur == null)
+                    {
                         codeValid = true;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Le Conservateur avec ce code {0} existe déja, voulez vous re-essayer? Oui ou Non (O/N)", retourConservateur.Nom + " " + retourConservateur.Prenom);
+                        string sortirconservateur = Console.ReadLine();
+                        if (sortirconservateur != "O")
+                        {
+                            break;
+                        }
+                    }
                 }
                 else
                 {
@@ -507,41 +543,46 @@ namespace GalerieArtSGI
                     Console.WriteLine("Entrez le code du consevateur");
                     Console.ResetColor();
                 }
+            
+
+                    do
+                    {
+                        Console.WriteLine("Entrez le prenom du consevateur");
+                        prenonconservateur = Console.ReadLine();
+                        if (validCodeLongueur(prenonconservateur, 30, false))
+                        {
+                            prenomValid = true;
+                        }
+                        else
+                        {
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.WriteLine("Prenom invalid - doit avoir 30 characteres ");
+                            Console.ResetColor();
+                        }
+                    } while (prenomValid == false);
+
+                    do
+                    {
+                        Console.WriteLine("Entrez le nom du consevateur");
+                        conservateurNom = Console.ReadLine();
+                        if (validCodeLongueur(conservateurNom, 30, false))
+                        {
+                            nomValid = true;
+                        }
+                        else
+                        {
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.WriteLine("Nom invalid - doit avoir 30 characteres ");
+                            Console.ResetColor();
+                        }
+                    } while (nomValid == false);
             } while (codeValid == false);
 
-            do
+            if (codeValid)
             {
-                Console.WriteLine("Entrez le prenom du consevateur");
-                prenonconservateur = Console.ReadLine();
-                if (validCodeLongueur(prenonconservateur, 30, false))
-                {
-                    prenomValid = true;
-                }
-                else
-                {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("Prenom invalid - doit avoir 30 characteres ");
-                    Console.ResetColor();
-                }
-            } while (prenomValid == false);
-
-            do
-            {
-                Console.WriteLine("Entrez le nom du consevateur");
-                conservateurNom = Console.ReadLine();
-                if (validCodeLongueur(conservateurNom, 30, false))
-                {
-                    nomValid = true;
-                }
-                else
-                {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("Nom invalid - doit avoir 30 characteres ");
-                    Console.ResetColor();
-                }
-            } while (nomValid == false);
-
-            return new string[] { conservateurCode, prenonconservateur, conservateurNom };
+                return new string[] { conservateurCode, prenonconservateur, conservateurNom };
+            }
+            return new string[] { };
         }
 
 

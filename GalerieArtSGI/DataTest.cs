@@ -26,15 +26,15 @@ namespace GalerieArtSGI
                                               };
 
         //liste des oeuvres avec data test 
-        public static string[,] listOeuvre = {{"PAI01", "Femme à la résille", "ABC01", "1938", "67 400 000$", "0", "E"},
-                                              {"PAI02", "Peasant Woman Against a Background of Wheat", "ABC02", "1890", "68 900 000$", "0", "E"},
-                                              {"PAI03", "Femme aux Bras Croisés", "ABC01", "1902", "55 000 000$", "0", "E"},
-                                              {"PAI04", "Rideau, Cruchon et Compotier", "ABC04", "1894", "60 500 000$", "0", "E"},
-                                              {"PAI05", "Le Bassin aux Nymphéas", "ABC05", "1919", "0", "8 050 0000$", "V"},
-                                              {"PAI06", "Salvator Mundi", "ABC02", "1519", "127 500 000$", "0", "E"},
-                                              {"PAI07", "Portrait of Jan Six", "ABC03", "1654", "0", "180 000 000$", "V"},
-                                              {"PAI08", "Judas returning the 30 pieces of silver", "ABC03", "1629", "70 000 000$", "0", "N"},
-                                              {"PAI09", "When Will You Marry Me?", "ABC06", "1892", "263 100 000$", "0", "N"},
+        public static object[,] listOeuvre = {{"PAI01", "Femme à la résille", "ABC01", 1938, 67400000, 0, "E"},
+                                              {"PAI02", "Peasant Woman Against a Background of Wheat", "ABC02", 1890, 68900000, 0, "E"},
+                                              {"PAI03", "Femme aux Bras Croisés", "ABC01", 1902, 55000000, 0, "E"},
+                                              {"PAI04", "Rideau, Cruchon et Compotier", "ABC04", 1894, 60500000, 0, "E"},
+                                              {"PAI05", "Le Bassin aux Nymphéas", "ABC05", 1919, 0, 80500000, "V"},
+                                              {"PAI06", "Salvator Mundi", "ABC02", 1519, 127500000, 0, "E"},
+                                              {"PAI07", "Portrait of Jan Six", "ABC03", 1654, 0, 180000000, "V"},
+                                              {"PAI08", "Judas returning the 30 pieces of silver", "ABC03", 1629, 70000000, 0, "N"},
+                                              {"PAI09", "When Will You Marry Me?", "ABC06", 1892, 263100000, 0, "N"},
                                              };
     }
 }

@@ -28,11 +28,19 @@ namespace GalerieArtSGI
                 {
                     string[] infoConservateur = NouveauConservateur();
                     gal.AjouterConservateurs(infoConservateur[0], infoConservateur[1], infoConservateur[2], modeTest);
-                                    }
+                }
                 else if (valeurChoix == 2) // Option 2 - Ajouter artiste
                 {
                     string[] infoArtiste = NouvelArtiste();
-                    gal.AjouterArtiste(infoArtiste[0], infoArtiste[1], infoArtiste[2], infoArtiste[3], modeTest);
+                    if (infoArtiste.Count() > 0)
+                    {
+                        gal.AjouterArtiste(infoArtiste[0], infoArtiste[1], infoArtiste[2], infoArtiste[3], modeTest);
+                    }
+                    else
+                    {
+                        Console.WriteLine("Artiste non sauvegarder");
+                        Console.ReadKey();
+                    }
                 }
                 else if (valeurChoix == 3) // Option 3 -Ajouter oeuvre
                 {
@@ -46,11 +54,10 @@ namespace GalerieArtSGI
                 else if (valeurChoix == 5) // Option 5 - Afficher artiste
                 {
                     gal.AfficherArtiste();
-                    
                 }
                 else if (valeurChoix == 6) // Options 6 - Afficher oeuvre
                 {
-                    //gal.AfficherOeuvre();
+                    gal.AfficherOeuvre();
                 }
                 else if (valeurChoix == 7) // Options 7 - Vendre œuvre
                 {
@@ -60,6 +67,7 @@ namespace GalerieArtSGI
                 else if (valeurChoix == 9) // Options 9 - Load test data
                 {
                     LoadDataTest();
+                    valeurChoix = 0;
                 }
             }
         }
@@ -79,11 +87,24 @@ namespace GalerieArtSGI
                 string LeCode = DataTest.listArtiste[x, 0];
                 string lePrenom = DataTest.listArtiste[x, 1];
                 string leNom = DataTest.listArtiste[x, 2];
-                string leConservateur = DataTest.listArtiste[x, 2];
+                string leConservateur = DataTest.listArtiste[x, 3];
                 gal.AjouterArtiste(LeCode, lePrenom, leNom, leConservateur, modeTest);
             }
 
+            for (int x = 0; x < DataTest.listOeuvre.GetLength(0); x++)
+            {
+                string LeCode = (string)DataTest.listOeuvre[x, 0];
+                string leTitre = (string)DataTest.listOeuvre[x, 1];
+                string leIdArtiste = (string)DataTest.listOeuvre[x, 2];
+                int    leAnnee = (int)DataTest.listOeuvre[x, 3];
+                int    leValeur = (int)DataTest.listOeuvre[x, 4];
+                //double lePrix = double.Parse(DataTest.listOeuvre[x, 5]);
+                //string leEtat = DataTest.listOeuvre[x, 6];
+                gal.AjouterOeuvre(LeCode, leTitre, leAnnee, leValeur, leIdArtiste, modeTest);
+            }
+            Console.ReadKey();
             Console.WriteLine("Le data test a été chargé");
+
             modeTest = "N";
         }
 
@@ -133,7 +154,7 @@ namespace GalerieArtSGI
                 Console.WriteLine("Erreur SVP Sélectionnez un nombre");
                 Console.ReadKey();
                 Console.ResetColor();
-                return 9;
+                return 0;
             }
         }
 
@@ -217,7 +238,23 @@ namespace GalerieArtSGI
                 if (validCodeLongueur(conservateurID, 5, false))
                 {
                     // rajout ici recup nom conservateur et valid que le ID conservateur est valide
-                    idValid = true;
+                    if (gal.TrouverConservateur(conservateurID, false))
+                    {
+                        idValid = true;
+                    }
+
+
+                    if (!idValid)
+                    {
+                        Console.WriteLine("Conservateur non trouvé voulez vous re-essayer? oui ou non = O/N");
+                        string sortirconservateur = Console.ReadLine();
+                        if (sortirconservateur != "O")
+                        {
+                            break;
+                        }
+                    }
+
+
                 }
                 else
                 {
@@ -227,16 +264,14 @@ namespace GalerieArtSGI
                 }
             } while (idValid == false);
 
+            if (!idValid)
+            {
+                return new string[] { }; ;
+            }
+
             return new string[] { artisteCode, artistePrenom, artisteNom, conservateurID };
-
             
-        }
-
-
-        private static void AfficherLesArtistes()
-        {
-            Console.WriteLine("Artiste présent au systme");
-            Console.ReadKey();
+            
         }
 
 

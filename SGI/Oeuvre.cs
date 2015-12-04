@@ -11,40 +11,40 @@ namespace SGI
 {
     public class Oeuvre
     {
-        private string idOeuvre = "";
-        private string titre;
-        private int annee;
-        private double prix = 0;
-        private double valeurEstimee;
-        private string idArtiste;
-        private string etat = "";
+        private string id = "";
+        private string titre = "";
+        private int annee = 1700;
+        private int prix = 0;
+        private int valeurEstimee = 0;
+        private string idArtiste = "";
+        private string etat = "E";
 
 
         public string Titre
         {
             get { return titre; }
-            set { titre = value; }
+            set { Titre = titre; }
         }
 
 
         public int Annee
         {
             get { return annee; }
-            set { annee = value; }
+            set { Annee = annee; }
         }
 
 
-        public double ValeurEstimee
+        public int ValeurEstimee
         {
             get { return valeurEstimee; }
-            set { valeurEstimee = value; }
+            set { ValeurEstimee = valeurEstimee; }
         }
 
 
         public string IdArtiste
         {
             get { return idArtiste; }
-            set { idArtiste = value; }
+            set { IdArtiste = idArtiste; }
         }
 
 
@@ -53,8 +53,13 @@ namespace SGI
         }
 
 
-        public Oeuvre(string idOeuvre, string titre, int annee, double valeurEstimee, string idArtiste)
+        public Oeuvre(string idoeuvre, string titreoeuvre, int anneeoeuvre, int valeurEstimeeoeuvre, string idArtisteoeuvre)
         {
+            id = idoeuvre;
+            titre = titreoeuvre;
+            annee = anneeoeuvre;
+            valeurEstimee = valeurEstimeeoeuvre;
+            idArtiste = idArtisteoeuvre;
             etat = "E";
             prix = 0;
         }
@@ -76,7 +81,7 @@ namespace SGI
                 
         public override string ToString()
         {
-            string infoOeuvre = "\nID: " + idOeuvre + " \nTitre :" + titre + "Année: " + annee + "\nValeur Estimée: " + valeurEstimee;
+            string infoOeuvre = "\nID: " + id + "\n Titre :" + titre + "\n Année: " + annee + "\n Valeur Estimée: " + valeurEstimee;
 
             return infoOeuvre;
         }

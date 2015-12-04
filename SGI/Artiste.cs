@@ -32,9 +32,9 @@ namespace SGI
 
         public override string ToString()
         {
-            string infoConservateur = "\nID: " + base.ID + " \nNom :" + base.Prenom + " " + base.Nom;
+            string infoArtiste = "\nID: " + base.ID + " \nNom :" + base.Prenom + " " + base.Nom;
 
-            return infoConservateur;
+            return infoArtiste;
         }
     }
 }

@@ -22,6 +22,20 @@ namespace SGI
         {
         }
 
+        public Conservateur TrouveParID(string id)
+        {
+            Conservateur retour = null;
+            foreach (Conservateur c in this)
+            {
+                if (c.ID == id)
+                {
+                    retour = c;
+                    break;
+                }
+            }
+            return retour;
+        }
+
         public Conservateur this[int ConservateurIndex]
         {
             get { return (Conservateur)List[ConservateurIndex]; }

@@ -54,7 +54,7 @@ namespace GalerieArtSGI
                 else if (valeurChoix == 3) // Option 3 -Ajouter oeuvre
                 {
                     object[] infoOeuvre = NouvelleOeuvre();
-                    gal.AjouterOeuvre((string)infoOeuvre[0], (string)infoOeuvre[1], (int)infoOeuvre[2], (int)infoOeuvre[3], (string)infoOeuvre[4], modeTest);
+                    gal.AjouterOeuvre((string)infoOeuvre[0], (string)infoOeuvre[1], (int)infoOeuvre[2], (double)infoOeuvre[3], (string)infoOeuvre[4], modeTest);
                 }
                 else if (valeurChoix == 4) // Option 4 - Afficher conservateur
                 {
@@ -198,7 +198,7 @@ namespace GalerieArtSGI
 
                 if (validCodeLongueur(artisteCode, 5))
                 {
-                    Artiste retourArtiste = gal.TrouverArtiste(artisteCode);
+                    Artiste retourArtiste = gal.TableauArtistes.TrouveParID(artisteCode);
 
                     if (retourArtiste == null)
                     {
@@ -261,7 +261,7 @@ namespace GalerieArtSGI
                         if (validCodeLongueur(conservateurID, 5, false))
                         {
                             // rajout ici recup nom conservateur et valid que le ID conservateur est valide
-                            if (gal.TrouverConservateur(conservateurID) != null)
+                            if (gal.TableauConservateurs.TrouveParID(conservateurID) != null)
                             {
                                 idValid = true;
                             }
@@ -306,7 +306,6 @@ namespace GalerieArtSGI
             Console.WriteLine("Ajouter Oeuvre");
             Console.ResetColor();
             Console.WriteLine("- - - - - - - - - - - -");
-            Console.WriteLine("Entrez le code de l'Oeuvre");
 
             bool codeValid = false;
             bool nomValid = false;
@@ -319,15 +318,29 @@ namespace GalerieArtSGI
             string nonExiste = "";
             string anneOeuvrestr = "";
             int anneOeuvre = 1700;
-            int valeurOeuvre = 0;
+            double valeurOeuvre = 0;
 
             do
             {
+                Console.WriteLine("Entrez le code de l'Oeuvre");
                 oeuvreCode = Console.ReadLine().ToUpper();
 
                 if (validCodeLongueur(oeuvreCode, 5))
                 {
-                    codeValid = true;
+                    Oeuvre retourOeuvre = gal.TableauOeuvres.TrouveParID(oeuvreCode);
+                    if (retourOeuvre == null)
+                    {
+                        codeValid = true;
+                    }
+                    else
+                    {
+                        Console.WriteLine("L'Oeuvre avec ce code {0} existe déja, voulez vous re-essayer? Oui ou Non (O/N)", retourOeuvre.Titre);
+                        string sortirOeuvre = Console.ReadLine();
+                        if (sortirOeuvre != "O")
+                        {
+                            break;
+                        }
+                    }
                 }
                 else
                 {
@@ -407,7 +420,7 @@ namespace GalerieArtSGI
 
                 try
                 {
-                    valeurOeuvre = int.Parse(saisieOeuvre);
+                    valeurOeuvre = double.Parse(saisieOeuvre);
                     valeurValid = true;
                 }
                 catch (FormatException e)
@@ -447,7 +460,7 @@ namespace GalerieArtSGI
 
                 if (oeuvreCode.Length == 5)
                 {
-                    retourOeuvre = gal.TrouverOeuvre(oeuvreCode);
+                    retourOeuvre = gal.TableauOeuvres.TrouveParID(oeuvreCode);
 
                     if (retourOeuvre != null)
                     {
@@ -520,7 +533,7 @@ namespace GalerieArtSGI
 
                 if (validCodeLongueur(conservateurCode, 5)) // appelle la fonction qui valide la longueur
                 {
-                    Conservateur retourConservateur = gal.TrouverConservateur(conservateurCode);
+                    Conservateur retourConservateur = gal.TableauConservateurs.TrouveParID(conservateurCode);
 
                     if (retourConservateur == null)
                     {

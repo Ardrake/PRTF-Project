@@ -15,6 +15,21 @@ namespace SGI
         }
 
 
+        public Artiste TrouveParID(string id)
+        {
+            Artiste retour = null;
+            foreach (Artiste c in this)
+            {
+                if (c.ID == id)
+                {
+                    retour = c;
+                    break;
+                }
+            }
+            return retour;
+        }
+
+
         // Constructeur par défaut
         public Artistes()
         {

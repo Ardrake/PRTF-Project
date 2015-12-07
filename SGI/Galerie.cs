@@ -43,50 +43,6 @@ namespace SGI
         }
 
 
-        public Conservateur TrouverConservateur(string id)
-        {
-            Conservateur retour = null;
-            foreach (Conservateur c in TableauConservateurs)
-            {
-                if (c.ID == id)
-                {
-                    retour = c;
-                    break;
-                }
-            }
-            return retour;
-        }
-
-
-        public Artiste TrouverArtiste(string id)
-        {
-            Artiste retour = null;
-            foreach (Artiste c in TableauArtistes)
-            {
-                if (c.ID == id)
-                {
-                    retour = c;
-                    break;
-                }
-            }
-            return retour;
-        }
-
-
-        public Oeuvre TrouverOeuvre(string idOeuvre)
-        {
-            Oeuvre retour = null;
-            foreach (Oeuvre o in TableauOeuvres)
-            {
-                if (o.ID == idOeuvre)
-                {
-                    retour = o;
-                    break;
-                }
-            }
-            return retour;
-        }
-
         public bool VendreOeuvre(Oeuvre oOeuvre, double prixvente)
         {
             bool OeuvreVendu = false;

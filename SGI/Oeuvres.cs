@@ -20,6 +20,21 @@ namespace SGI
         {
         }
 
+
+        public Oeuvre TrouveParID(string id)
+        {
+            Oeuvre retour = null;
+            foreach (Oeuvre c in this)
+            {
+                if (c.ID == id)
+                {
+                    retour = c;
+                    break;
+                }
+            }
+            return retour;
+        }
+
         public Oeuvre this[int OeuvreIndex]
         {
             get { return (Oeuvre)List[OeuvreIndex]; }

@@ -9,7 +9,7 @@ namespace GalerieArtSGI
 {
     class Program
     {
-        public static string modeTest = "O";
+        public static string modeTest = "O"; // Mettre a "N" pour oté le mode test du menu
         static Galerie gal = new Galerie();
 
         static void Main(string[] args)
@@ -36,7 +36,6 @@ namespace GalerieArtSGI
                         Console.WriteLine("Conservateur non sauvegarder");
                         Console.ReadKey();
                     }
-
                 }
                 else if (valeurChoix == 2) // Option 2 - Ajouter artiste
                 {
@@ -54,7 +53,15 @@ namespace GalerieArtSGI
                 else if (valeurChoix == 3) // Option 3 -Ajouter oeuvre
                 {
                     object[] infoOeuvre = NouvelleOeuvre();
-                    gal.AjouterOeuvre((string)infoOeuvre[0], (string)infoOeuvre[1], (int)infoOeuvre[2], (double)infoOeuvre[3], (string)infoOeuvre[4], modeTest);
+                    if (infoOeuvre.Count() > 0)
+                    {
+                        gal.AjouterOeuvre((string)infoOeuvre[0], (string)infoOeuvre[1], (int)infoOeuvre[2], (double)infoOeuvre[3], (string)infoOeuvre[4], modeTest);
+                    }
+                    else
+                    {
+                        Console.WriteLine("Oeuvre non sauvegarder");
+                        Console.ReadKey();
+                    }
                 }
                 else if (valeurChoix == 4) // Option 4 - Afficher conservateur
                 {
@@ -71,9 +78,8 @@ namespace GalerieArtSGI
                 else if (valeurChoix == 7) // Options 7 - Vendre œuvre
                 {
                     VendreUneOeuvre();
-                    //gal.VendreOeuvre();
                 }
-                else if (valeurChoix == 9) // Options 9 - Load test data
+                else if (valeurChoix == 9 && modeTest == "O") // Options 9 - Load test data
                 {
                     LoadDataTest();
                     valeurChoix = 0;
@@ -107,8 +113,6 @@ namespace GalerieArtSGI
                 string leIdArtiste = (string)DataTest.listOeuvre[x, 2];
                 int    leAnnee = (int)DataTest.listOeuvre[x, 3];
                 int    leValeur = (int)DataTest.listOeuvre[x, 4];
-                //double lePrix = double.Parse(DataTest.listOeuvre[x, 5]);
-                //string leEtat = DataTest.listOeuvre[x, 6];
                 gal.AjouterOeuvre(LeCode, leTitre, leAnnee, leValeur, leIdArtiste, modeTest);
             }
             Console.ReadKey();
@@ -169,7 +173,7 @@ namespace GalerieArtSGI
 
 
         /// <summary>
-        /// Fonction pour ajouter Artiste dans la base de donnée
+        /// Fonction pour ajouter Artiste
         /// </summary>
         private static string[] NouvelArtiste()
         {
@@ -180,8 +184,6 @@ namespace GalerieArtSGI
             Console.ResetColor();
             Console.WriteLine("- - - - - - - - - - - -");
             
-            // validation des codes/nom a faire 
-
             string artisteCode = "";
             string artisteNom = "";
             string artistePrenom = "";
@@ -221,8 +223,11 @@ namespace GalerieArtSGI
                     Console.WriteLine("Entrez le ID de l'artiste");
                     Console.ResetColor();
                 }
-            
-                    do
+            } while (codeValid == false);
+
+            if (codeValid)
+            {
+                do
                     {
                         Console.WriteLine("Entrez le Prénom de l'artiste");
                         artistePrenom = Console.ReadLine();
@@ -283,20 +288,15 @@ namespace GalerieArtSGI
                             Console.ResetColor();
                         }
                     } while (idValid == false);
-            } while (codeValid == false);
-            if (!idValid)
-            {
-                return new string[] { }; ;
-            }
 
-            return new string[] { artisteCode, artistePrenom, artisteNom, conservateurID };
-            
-            
+                return new string[] { artisteCode, artistePrenom, artisteNom, conservateurID };
+            }
+            return new string[] { }; ;
         }
 
 
         /// <summary>
-        /// Ajouter un oeuvre dans la BD
+        /// Ajouter un oeuvre 
         /// </summary>
         private static object[] NouvelleOeuvre()
         {
@@ -352,87 +352,104 @@ namespace GalerieArtSGI
 
             } while (codeValid == false);
 
-            do
+            if (codeValid)
             {
-                Console.WriteLine("Entrez le nom de l'Oeuvre");
-                oeuvreNom = Console.ReadLine();
-                if (validCodeLongueur(oeuvreNom, 40, false))
+                do
                 {
-                    nomValid = true;
-                }
-                else
-                {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("Nom invalid - doit avoir 40 characteres ");
-                    Console.ResetColor();
-                }
-            } while (nomValid == false);
-
-            do
-            {
-                Console.WriteLine("Entrez le code de l'artiste qui a fait cette oeuvre");
-                oeuvreArtisteCode = Console.ReadLine().ToUpper();
-
-                //
-                // Fonction pour recupéré le nom de l'artiste avec son ID 
-                nonExiste = "Non de l'artiste trouvé";
-                //
-
-                if (nonExiste != "")
-                {
-                    artisteValid = true;
-                }
-                else
-                {
-                    Console.WriteLine("Aucun artiste n'est associer a ce code");
-                }
-            } while (artisteValid == false);
-
-            do
-            {
-                Console.WriteLine("Entrez l'année de realisation de l'oeuvre (AAAA)");
-                anneOeuvrestr = Console.ReadLine();
-
-                if (anneOeuvrestr.Length == 4)
-                {
-                    try
+                    Console.WriteLine("Entrez le nom de l'Oeuvre");
+                    oeuvreNom = Console.ReadLine();
+                    if (validCodeLongueur(oeuvreNom, 40, false))
                     {
-                        anneOeuvre = Int32.Parse(anneOeuvrestr);
-                        anneeValid = true;
+                        nomValid = true;
                     }
-                    catch (FormatException e)
+                    else
                     {
-                        Console.WriteLine(e.Message);
-                        Console.ReadKey();
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine("Nom invalid - doit avoir 40 characteres ");
+                        Console.ResetColor();
                     }
-                }
-                else
+                } while (nomValid == false);
+
+                do
                 {
-                    Console.WriteLine("La date doit etre du format (AAAA)");
+                    Console.WriteLine("Entrez le code de l'artiste qui a fait cette oeuvre");
+                    oeuvreArtisteCode = Console.ReadLine().ToUpper();
+
+                    Artiste artisteTrouve = gal.TableauArtistes.TrouveParID(oeuvreArtisteCode);
+                    if (artisteTrouve != null)
+                    {
+                        nonExiste = artisteTrouve.Prenom + " " + artisteTrouve.Nom;
+                    }
+
+                    if (nonExiste != "")
+                    {
+                        artisteValid = true;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Artiste non trouvé voulez vous re-essayer? oui ou non = O/N");
+                        string sortirOeuvreArtiste = Console.ReadLine();
+                        if (sortirOeuvreArtiste != "O")
+                        {
+                            break;
+                        }
+                    }
+
+
+                } while (artisteValid == false);
+
+                if (artisteValid)
+                {
+
+                    do
+                    {
+                        Console.WriteLine("Entrez l'année de realisation de l'oeuvre (AAAA)");
+                        anneOeuvrestr = Console.ReadLine();
+
+                        if (anneOeuvrestr.Length == 4)
+                        {
+                            try
+                            {
+                                anneOeuvre = Int32.Parse(anneOeuvrestr);
+                                anneeValid = true;
+                            }
+                            catch (FormatException e)
+                            {
+                                Console.WriteLine(e.Message);
+                                Console.ReadKey();
+                            }
+                        }
+                        else
+                        {
+                            Console.WriteLine("La date doit etre du format (AAAA)");
+                        }
+
+                    } while (anneeValid == false);
+
+                    do
+                    {
+                        Console.WriteLine("Entrez la valeur estimée de l'oeuvre");
+                        string saisieOeuvre = Console.ReadLine();
+
+                        try
+                        {
+                            valeurOeuvre = double.Parse(saisieOeuvre);
+                            valeurValid = true;
+                        }
+                        catch (FormatException e)
+                        {
+                            Console.WriteLine(e.Message);
+                            Console.ReadKey();
+                        }
+
+                    } while (valeurValid == false);
                 }
-
-            } while (anneeValid == false);
-
-            do
+            }
+            if (codeValid && artisteValid)
             {
-                Console.WriteLine("Entrez la valeur estimée de l'oeuvre");
-                string saisieOeuvre = Console.ReadLine();
-
-                try
-                {
-                    valeurOeuvre = double.Parse(saisieOeuvre);
-                    valeurValid = true;
-                }
-                catch (FormatException e)
-                {
-                    Console.WriteLine(e.Message);
-                    Console.ReadKey();
-                }
-
-            } while (valeurValid == false);
-
-
-            return new object[] { (string)oeuvreCode, (string)oeuvreNom, (int)anneOeuvre, (double)valeurOeuvre, (string)oeuvreArtisteCode };
+                return new object[] { (string)oeuvreCode, (string)oeuvreNom, (int)anneOeuvre, (double)valeurOeuvre, (string)oeuvreArtisteCode };
+            }
+            return new object[] {};
         }
 
 
@@ -447,7 +464,7 @@ namespace GalerieArtSGI
             Console.WriteLine("Vendre oeuvre");
             Console.ResetColor();
             Console.WriteLine("- - - - - - - - - - - -");
-            Console.WriteLine("Entrez le code de l'ouevre a vendre");
+            Console.WriteLine("Entrez le code de l'Ouevre a vendre");
 
             bool codeValid = false;
             double PrixOeuvre = 0;
@@ -556,43 +573,44 @@ namespace GalerieArtSGI
                     Console.WriteLine("Entrez le code du consevateur");
                     Console.ResetColor();
                 }
-            
-
-                    do
-                    {
-                        Console.WriteLine("Entrez le prenom du consevateur");
-                        prenonconservateur = Console.ReadLine();
-                        if (validCodeLongueur(prenonconservateur, 30, false))
-                        {
-                            prenomValid = true;
-                        }
-                        else
-                        {
-                            Console.ForegroundColor = ConsoleColor.Red;
-                            Console.WriteLine("Prenom invalid - doit avoir 30 characteres ");
-                            Console.ResetColor();
-                        }
-                    } while (prenomValid == false);
-
-                    do
-                    {
-                        Console.WriteLine("Entrez le nom du consevateur");
-                        conservateurNom = Console.ReadLine();
-                        if (validCodeLongueur(conservateurNom, 30, false))
-                        {
-                            nomValid = true;
-                        }
-                        else
-                        {
-                            Console.ForegroundColor = ConsoleColor.Red;
-                            Console.WriteLine("Nom invalid - doit avoir 30 characteres ");
-                            Console.ResetColor();
-                        }
-                    } while (nomValid == false);
             } while (codeValid == false);
 
             if (codeValid)
             {
+                do
+                {
+                    Console.WriteLine("Entrez le prenom du consevateur");
+                    prenonconservateur = Console.ReadLine();
+                    if (validCodeLongueur(prenonconservateur, 30, false))
+                    {
+                        prenomValid = true;
+                    }
+                    else
+                    {
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine("Prenom invalid - doit avoir 30 characteres ");
+                        Console.ResetColor();
+                    }
+                } while (prenomValid == false);
+
+                do
+                {
+                    Console.WriteLine("Entrez le nom du consevateur");
+                    conservateurNom = Console.ReadLine();
+                    if (validCodeLongueur(conservateurNom, 30, false))
+                    {
+                        nomValid = true;
+                    }
+                    else
+                    {
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine("Nom invalid - doit avoir 30 characteres ");
+                        Console.ResetColor();
+                    }
+                } while (nomValid == false);
+            
+
+
                 return new string[] { conservateurCode, prenonconservateur, conservateurNom };
             }
             return new string[] { };

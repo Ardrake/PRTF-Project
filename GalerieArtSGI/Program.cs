@@ -464,7 +464,6 @@ namespace GalerieArtSGI
             Console.WriteLine("Vendre oeuvre");
             Console.ResetColor();
             Console.WriteLine("- - - - - - - - - - - -");
-            Console.WriteLine("Entrez le code de l'Ouevre a vendre");
 
             bool codeValid = false;
             double PrixOeuvre = 0;
@@ -473,6 +472,7 @@ namespace GalerieArtSGI
 
             do
             {
+                Console.WriteLine("Entrez le code de l'Ouevre a vendre");
                 oeuvreCode = Console.ReadLine().ToUpper();
 
                 if (oeuvreCode.Length == 5)
@@ -495,15 +495,18 @@ namespace GalerieArtSGI
                     }
                     
                 }
-                else
+                else 
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine("Code invalid - doit avoir 5 characteres ");
                     Console.WriteLine("Entrez le code de l'oeuvre");
                     Console.ResetColor();
                 }
-            
 
+            } while (!codeValid);
+
+            if (codeValid)
+            {
                 Console.WriteLine("Entrez le prix de vente :");
                 string saisiePrixOeuvre = Console.ReadLine();
 
@@ -516,11 +519,10 @@ namespace GalerieArtSGI
                     Console.WriteLine(e.Message);
                     Console.ReadKey();
                 }
+                gal.VendreOeuvre(retourOeuvre, PrixOeuvre);
+                
 
-
-            } while (codeValid == false);
-
-            gal.VendreOeuvre(retourOeuvre, PrixOeuvre);
+            }
         }
 
 

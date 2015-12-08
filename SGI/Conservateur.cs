@@ -15,10 +15,9 @@ namespace SGI
         const double TauxDeCommission = 0.10;
 
 
-        public double Commission
+        public double TauxCommission
         { 
-            get { return commission; }
-            set { commission = value; }
+            get { return TauxDeCommission; }
         }
 
 

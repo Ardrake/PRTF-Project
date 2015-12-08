@@ -54,7 +54,13 @@ namespace SGI
                     oOeuvre.Prix = prixvente;
                     oOeuvre.Etat = "V";
                     OeuvreVendu = true;
-                    Console.WriteLine("Oeuvre vendu");
+
+                    // Attribué commission au conservateur pour la vente
+                    Artiste oArtiste = TableauArtistes.TrouveParID(oOeuvre.IDArtiste);
+                    Conservateur oConservateur = TableauConservateurs.TrouveParID(oArtiste.IDConservateur);
+                    double commissionaPayer = oOeuvre.CalculerComm(prixvente, oConservateur);
+                    oConservateur.SetComm(commissionaPayer);
+                    Console.WriteLine("Oeuvre vendu, {0} $ en commission attribué au conservateur {1}.", commissionaPayer, oConservateur.Prenom + " " + oConservateur.Nom);
                     Console.ReadKey();
                 }
                 else

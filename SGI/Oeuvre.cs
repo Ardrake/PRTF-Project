@@ -56,6 +56,12 @@ namespace SGI
         }
 
 
+        public string IDArtiste
+        {
+            get { return idArtiste; }
+        }
+
+
         public Oeuvre()
         {
         }
@@ -75,7 +81,7 @@ namespace SGI
 
         public double CalculerComm(double PrixVente, Conservateur vendeur)
         {
-            double tauxDeCommission = vendeur.Commission;
+            double tauxDeCommission = vendeur.TauxCommission;
             double commissionPayer = 0;
 
             if (PrixVente > 0)

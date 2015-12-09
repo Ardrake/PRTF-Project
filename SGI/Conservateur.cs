@@ -21,6 +21,12 @@ namespace SGI
         }
 
 
+        public double Commission
+        {
+            get { return commission; }
+        }
+
+
         public Conservateur()
         {
         }

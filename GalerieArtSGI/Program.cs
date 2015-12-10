@@ -289,7 +289,7 @@ namespace GalerieArtSGI
                         }
                     } while (idValid == false);
 
-                return new string[] { artisteCode, artistePrenom, artisteNom, conservateurID };
+                if (idValid) return new string[] { artisteCode, artistePrenom, artisteNom, conservateurID };
             }
             return new string[] { }; ;
         }

@@ -28,6 +28,9 @@ namespace SGI
         }
 
 
+        /// <summary>
+        /// Afficher la liste des conservateur 
+        /// </summary>
         public void AfficherConservateur()
         {
             Console.WriteLine("Liste des Conservateur");
@@ -43,6 +46,13 @@ namespace SGI
         }
 
 
+        /// <summary>
+        /// Vendre oeuvre
+        /// </summary>
+        /// <param name="oOeuvre"></param> 
+        /// <param name="prixvente"></param>
+        /// <param name="verbose"></param>
+        /// <returns></returns>
         public bool VendreOeuvre(Oeuvre oOeuvre, double prixvente, bool verbose=true)
         {
             bool OeuvreVendu = false;
@@ -65,7 +75,6 @@ namespace SGI
                     {
                         Console.ReadKey();
                     }
-                    
                 }
                 else
                 {
@@ -77,10 +86,18 @@ namespace SGI
                     
                 }
             }
-
             return OeuvreVendu;
         }
 
+
+        /// <summary>
+        /// Ajouter Artiste 
+        /// </summary>
+        /// <param name="idartiste"></param>
+        /// <param name="prenomartiste"></param>
+        /// <param name="nomartiste"></param>
+        /// <param name="idconservateur"></param>
+        /// <param name="modetest"></param>
         public void AjouterArtiste(string idartiste, string prenomartiste, string nomartiste, string idconservateur, string modetest)
         {
             Artiste nouvartiste = new Artiste(idartiste, prenomartiste, nomartiste, idconservateur);
@@ -93,6 +110,9 @@ namespace SGI
         }
         
 
+        /// <summary>
+        /// Afficher la liste des artiste
+        /// </summary>
         public void AfficherArtiste()
         {
             Console.WriteLine("Liste des Artistes");
@@ -108,6 +128,15 @@ namespace SGI
         }
 
 
+        /// <summary>
+        /// Ajouter une oeuvre
+        /// </summary>
+        /// <param name="idoeuvre"></param>
+        /// <param name="titreoeuvre"></param>
+        /// <param name="anneeoeuvre"></param>
+        /// <param name="valeuroeuvre"></param>
+        /// <param name="idartiste"></param>
+        /// <param name="modetest"></param>
         public void AjouterOeuvre(string idoeuvre, string titreoeuvre,  int anneeoeuvre, double valeuroeuvre, string idartiste, string modetest)
         {
             //string idOeuvre, string titre, int annee, double valeurEstimee, string idArtiste
@@ -123,6 +152,9 @@ namespace SGI
         }
 
 
+        /// <summary>
+        /// Afficher la liste des oeuvres
+        /// </summary>
         public void AfficherOeuvre()
         {
             Console.WriteLine("Liste des Oeuvres");

@@ -43,7 +43,7 @@ namespace SGI
         }
 
 
-        public bool VendreOeuvre(Oeuvre oOeuvre, double prixvente)
+        public bool VendreOeuvre(Oeuvre oOeuvre, double prixvente, bool verbose=true)
         {
             bool OeuvreVendu = false;
             
@@ -61,12 +61,20 @@ namespace SGI
                     double commissionaPayer = oOeuvre.CalculerComm(prixvente, oConservateur);
                     oConservateur.SetComm(commissionaPayer);
                     Console.WriteLine("Oeuvre vendu, {0} $ en commission attribué au conservateur {1}.", commissionaPayer, oConservateur.Prenom + " " + oConservateur.Nom);
-                    Console.ReadKey();
+                    if (verbose)
+                    {
+                        Console.ReadKey();
+                    }
+                    
                 }
                 else
                 {
-                    Console.WriteLine("Le prix de vente est inferieur a la valeur estimée cette transaction est refusé");
-                    Console.ReadKey();
+                    if (verbose)
+                    {
+                        Console.WriteLine("Le prix de vente est inferieur a la valeur estimée cette transaction est refusé");
+                        Console.ReadKey();
+                    }
+                    
                 }
             }
 
